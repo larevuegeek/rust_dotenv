@@ -1,0 +1,13 @@
+[package]
+name = "rust_dotenv"
+authors = ["LaRevueGeek <contact@larevuegeek.com>"]
+version = "0.1.0"
+edition = "2021"
+description = "A Rust crate to load environment variables from .env files."
+license = "MIT"
+homepage = "https://github.com/larevuegeek/rust_dotenv"
+repository = "https://github.com/larevuegeek/rust_dotenv"
+readme = "../README.md"
+keywords = ["environment", "env", "dotenv", "settings", "config"]
+
+[dependencies]

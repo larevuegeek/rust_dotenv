@@ -1,0 +1,6 @@
+# Caches
+__MACOSX/
+.DS_Store
+
+# Builds
+target/
