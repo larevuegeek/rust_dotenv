@@ -1,4 +1,4 @@
-# rust DotEnv - A Lightweight Rust Library for Loading Environment Variables
+# Rust DotEnv - A Lightweight Rust Library for Loading Environment Variables
 
 `rust_dotenv` is a Rust library designed to load environment variables from `.env` files, supporting multiple environments and local overrides. This library is perfect for managing configurations dynamically across different environments like development, testing, and production.
 
