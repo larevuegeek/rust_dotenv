@@ -1,7 +1,8 @@
 use std::collections::HashMap;
 use std::io::{self, BufRead};
 use std::fs::File;
-use std::path::Path;
+use std::path::{Path, PathBuf};
+use std::env;
 
 use crate::vars::parse_var;
 
@@ -40,7 +41,12 @@ impl DotEnv {
 
         let mut vars: HashMap<String, String> = HashMap::new();
 
-        if let Ok(file) = File::open(filename) {
+        let current_dir: PathBuf = env::current_dir().expect("Failed to get current directory");
+        let dotenv_path: PathBuf = current_dir.join(&filename);
+
+        println!("{:?}", current_dir);
+
+        if let Ok(file) = File::open(dotenv_path) {
             for line in io::BufReader::new(file).lines() {
                 if let Ok(line) = line {
                     if !line.starts_with("#") && !line.is_empty() {
