@@ -42,9 +42,10 @@ impl DotEnv {
         let mut vars: HashMap<String, String> = HashMap::new();
 
         let current_dir: PathBuf = env::current_dir().expect("Failed to get current directory");
-        let dotenv_path: PathBuf = current_dir.join(&filename);
-
-        println!("{:?}", current_dir);
+        let dotenv_path: PathBuf = Self::find(&current_dir, &filename).unwrap_or_else(|| {
+            eprintln!("Error: {} file not found. No variables were loaded.", filename);
+            PathBuf::new() // Chemin vide si le fichier n'est pas trouvé
+        });
 
         if let Ok(file) = File::open(dotenv_path) {
             for line in io::BufReader::new(file).lines() {
@@ -65,6 +66,23 @@ impl DotEnv {
         }
 
         Ok(vars)
+    }
+
+    fn find(starting_dir: &Path, filename: &str) -> Option<PathBuf> {
+        let mut dir = Some(starting_dir.to_path_buf());
+
+        while let Some(current_dir) = dir {
+            let candidate = current_dir.join(filename);
+
+            if candidate.exists() {
+                return Some(candidate);
+            }
+
+            // Remonter d'un répertoire
+            dir = current_dir.parent().map(Path::to_path_buf);
+        }
+
+        None
     }
 
     pub fn get_var(&self, k: String) -> Option<String> {
